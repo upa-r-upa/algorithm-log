@@ -1,13 +1,16 @@
-strings = input().replace("()", "*")
-stack = []
+strings = input()
+prev = 0
 result = 0
 
 for i, s in enumerate(strings):
 	if s == "(":
-		stack.append(i)
-	elif s == ")":
-		idx = stack.pop()
-		cnt = strings[idx:i].count("*")
-		result += cnt + 1
+		prev += 1
+	else:
+		if strings[i - 1] == "(":
+			prev -= 1
+			result += prev
+		else:
+			prev -= 1
+			result += 1
 		
 print(result)
