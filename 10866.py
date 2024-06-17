@@ -1,16 +1,15 @@
 import sys
-from collections import deque
 
 read = sys.stdin.readline
-n=int(read().rstrip())
+n = int(read().rstrip())
 
-arr = deque()
+arr = []
 
 for _ in range(n):
 	cmd = read().rstrip()
 	
 	if cmd == "pop_front":
-		print(arr.popleft() if arr else -1)
+		print(arr.pop(0) if arr else -1)
 	elif cmd == "pop_back":
 		print(arr.pop() if arr else -1)
 	elif cmd == "size":
@@ -18,20 +17,10 @@ for _ in range(n):
 	elif cmd == "empty":
 		print(int(len(arr) == 0))
 	elif cmd == "front":
-		if arr:
-			front=arr.popleft()
-			arr.appendleft(front)
-			print(front)
-		else:
-			print(-1)
+		print(arr[0] if arr else -1)
 	elif cmd == "back":
-		if arr:
-			back=arr.pop()
-			arr.append(back)
-			print(back)
-		else:
-			print(-1)
+		print(arr[-1] if arr else -1)
 	elif cmd.startswith("push_front"):
-		arr.appendleft(int(cmd.split()[-1]))
+		arr.insert(0, int(cmd.split()[-1]))
 	elif cmd.startswith("push_back"):
 		arr.append(int(cmd.split()[-1]))
