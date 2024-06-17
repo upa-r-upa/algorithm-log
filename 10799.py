@@ -1,16 +1,17 @@
-strings = input()
-prev = 0
-result = 0
+stack = []
+raser=input()
+result=0
 
-for i, s in enumerate(strings):
-	if s == "(":
-		prev += 1
+for i in range(len(raser)):
+	if raser[i] == "(":
+		stack.append(raser[i])
 	else:
-		if strings[i - 1] == "(":
-			prev -= 1
-			result += prev
+		if raser[i - 1] == "(":
+			stack.pop()
+			result += len(stack)
 		else:
-			prev -= 1
+			stack.pop()
 			result += 1
-		
+
 print(result)
+		
