@@ -1,17 +1,36 @@
 import sys
 
-def selection_sort(arr):
-	for i in range(len(arr)):
-		min_idx=i
+def merge_sort(arr):
+	if len(arr) == 1:
+		return arr
 		
-		for j in range(i,len(arr)):
-			if arr[min_idx] > arr[j]:
-				min_idx=j
-		
-		arr[i],arr[min_idx]=arr[min_idx],arr[i]
-		
-	return arr
+	pivot=len(arr)//2
+	
+	left=merge_sort(arr[:pivot])
+	right=merge_sort(arr[pivot:])
+	
+	return merge_arr(left,right)
 
+def merge_arr(left,right):
+	result = []
+	
+	i=j=0
+	
+	while len(left) > i and len(right) > j:
+		if left[i] <= right[j]:
+			result.append(left[i])
+			i+=1
+		else:
+			result.append(right[j])
+			j+=1
+	while i < len(left):
+		result.append(left[i])
+		i+=1
+	while j < len(right):
+		result.append(right[j])
+		j+=1
+	return result
+    
 s=sys.stdin.readline().rstrip()
 result=[]
 
