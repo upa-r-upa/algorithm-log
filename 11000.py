@@ -38,28 +38,21 @@ input = sys.stdin.readline
 n = int(input().rstrip())
 classes = []
 rooms = []
-max_room = 1
 
 for _ in range(n):
     class_time = list(map(int, input().rstrip().split()))
-    heappush(classes, class_time)
+    classes.append(class_time)
 
-while classes:
-    if rooms and classes[0][0] >= rooms[0][0]:
-        # print("A. 강의실을 추가로 쓸 필요 없음.", rooms, classes[0])
-        while rooms and classes[0][0] >= rooms[0][0]:
-            heappop(rooms)
-        # print("A-after. 끝난 강의 다 뺌.", rooms)
-    else:
-        s,t = heappop(classes)
-        # print("B. 쓸 강의실이 없어서 넣습니다.", (s,t), rooms)
+classes.sort()
 
-        heappush(rooms, (t, (s,t)))
+heappush(rooms, classes[0][1])
 
-        # print("B-after. 강의실 추가 후.", rooms)
+for i in range(1,n):
+    s,t = classes[i]
 
-        if max_room < len(rooms):
-            # print("C. 최대 강의실 갱신", max_room, len(rooms))
-            max_room = len(rooms)
+    if s >= rooms[0]:
+        heappop(rooms)
 
-print(max_room)
+    heappush(rooms, t)
+
+print(len(rooms))
