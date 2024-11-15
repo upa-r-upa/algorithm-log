@@ -1,35 +1,54 @@
 import sys
+from collections import deque
 
 graph = dict()
 visited = set()
-result = []
+dfs_result = []
 
 def dfs(node):
     if node in visited:
         return
 
     visited.add(node)
-    result.append(node)
+    dfs_result.append(node)
 
     for neighbor in graph[node]:
         dfs(neighbor)
+
+def bfs(start_node):
+    bfs_result = []
+    q = deque([start_node])
+    visited_bfs = set([start_node])
+
+    while q:
+        node = q.popleft()
+        bfs_result.append(node) 
+    
+        for neighbor in graph[node]:
+            if neighbor not in visited_bfs:
+                q.append(neighbor)
+                visited_bfs.add(neighbor)
+
+    return bfs_result
+
 
 input = sys.stdin.readline
 
 n,m,v = map(int, input().rstrip().split())
 
+for i in range(n):
+    graph[i+1] = []
+
 for _ in range(m):
     a,b = map(int, input().rstrip().split())
-    
-    if a not in graph:
-        graph[a] = []
-    if b not in graph:
-        graph[b] = []
 
     graph[a].append(b)
     graph[b].append(a)
 
-print(graph)
+for nodes in graph.values():
+    nodes.sort()
+
 dfs(v)
 
-print(result)
+print(*dfs_result, sep=" ")
+print(*bfs(v), sep=" ")
